@@ -1,0 +1,8 @@
+build/
+dist/
+tools/
+tmp/
+*.log
+*.zip
+*.bak
+*.disabled-by-tesmioclock

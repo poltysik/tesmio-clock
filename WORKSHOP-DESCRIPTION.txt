@@ -1,0 +1,47 @@
+[h1]Tesmio Clock — синхронизированные цифровые часы[/h1]
+
+[h2]Важно: это дополнение, а не самостоятельный мод[/h2]
+
+[b]Tesmio Clock не является полноценным модом синхронизации времени и не работает самостоятельно.[/b] Это интерфейсное дополнение к оригинальному моду [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3779646468]Calendar Synchronizer от Tesmio / MaxLegend[/url]. Сначала обязательно подпишитесь и установите мод автора.
+
+Вся логика замедления календаря и синхронизации дня и ночи выполняется Calendar Synchronizer. Tesmio Clock добавляет к нему цифровые часы в верхней панели и проверенную калибровку отображения.
+
+Спасибо Tesmio / MaxLegend за Calendar Synchronizer и TesmioLoader, благодаря которым это дополнение стало возможным.
+
+[b]Это дополнение для Calendar Synchronizer:[/b]
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3779646468]Calendar Synchronizer в Steam Workshop[/url]
+
+[h2]Возможности[/h2]
+[list]
+[*]24-часовой формат: 16:00.
+[*]12-часовой формат: 4:00 PM.
+[*]Время меняется каждые 30 минут.
+[*]Дата переключается ровно в 00:00.
+[*]Рассвет, день, закат и ночь соответствуют показаниям часов.
+[*]Время и дата размещены в одном аккуратном поле штатного интерфейса.
+[*]Убрана ненужная всплывающая панель ванильного календаря.
+[/list]
+
+[h2]Установка[/h2]
+[olist]
+[*]Установите TesmioLoader и Calendar Synchronizer.
+[*]Откройте папку этого предмета Workshop.
+[*]Запустите [b]INSTALL-TESMIO-CLOCK.bat[/b].
+[*]Выберите 24-hour или AM/PM.
+[*]Запустите tesmiolauncher.exe, включите TesmioClock.dll и нажмите Launch.
+[/olist]
+
+Установщик сам найдёт игру, установит только один вариант и создаст резервную копию настроек Calendar Synchronizer. Формат можно сменить в любое время повторным запуском установщика.
+
+[b]Важно:[/b] не включайте одновременно старый GameClock.dll и TesmioClock.dll.
+
+[h2]English[/h2]
+
+[b]Tesmio Clock is not a standalone or complete time-synchronization mod.[/b] It is an interface add-on for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3779646468]Calendar Synchronizer by Tesmio / MaxLegend[/url]. Install the original author's mod first. Calendar Synchronizer provides the calendar-speed and day/night logic; Tesmio Clock adds the digital display and calibrated integration.
+
+The add-on includes separately tested 24-hour and AM/PM variants, switches the calendar date at midnight, removes the vanilla calendar hover strip, and installs through one format-selecting installer.
+
+Install TesmioLoader and Calendar Synchronizer first, run [b]INSTALL-TESMIO-CLOCK.bat[/b], select the format, then enable TesmioClock.dll in TesmioLauncher.
+
+[b]Source code, releases and full English/Russian instructions:[/b]
+[url=https://github.com/poltysik/tesmio-clock]https://github.com/poltysik/tesmio-clock[/url]

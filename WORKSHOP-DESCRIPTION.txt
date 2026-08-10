@@ -16,7 +16,6 @@ Calendar Synchronizer controls calendar speed and the day/night cycle. Tesmio Cl
 [list]
 [*]24-hour and 12-hour AM/PM variants.
 [*]Time display updates in 30-minute steps.
-[*]The calendar date changes exactly at midnight.
 [*]Calibrated dawn, daylight, sunset and night display.
 [*]Time and date share one clean field in the original top interface.
 [*]The unnecessary vanilla calendar hover panel is removed.
@@ -33,11 +32,21 @@ Calendar Synchronizer controls calendar speed and the day/night cycle. Tesmio Cl
 
 [h1]Installation and updates[/h1]
 
-1. Install TesmioLoader and Calendar Synchronizer.
-2. Subscribe to Tesmio Clock and open its Workshop folder.
-3. Run [b]INSTALL-TESMIO-CLOCK.bat[/b].
-4. Select `1` for 24-hour or `2` for 12-hour AM/PM.
-5. Start [b]tesmiolauncher.exe[/b], enable [b]TesmioClock.dll[/b] and press [b]Launch[/b].
+1. Install [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3773169177]TesmioLoader[/url] using the author's instructions.
+
+2. Subscribe to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3779646468]Calendar Synchronizer[/url].
+
+3. Subscribe to Tesmio Clock and open this exact folder:
+[code]Steam\steamapps\workshop\content\784150\3780805717[/code]
+
+To find it through Steam: Library → right-click Workers & Resources: Soviet Republic → Manage → Browse local files. In File Explorer go back from `steamapps\common\SovietRepublic` to `steamapps`, then open `workshop\content\784150\3780805717`.
+
+4. Run:
+[code]INSTALL-TESMIO-CLOCK.bat[/code]
+
+5. Select `1` for 24-hour or `2` for 12-hour AM/PM.
+
+6. Open the game folder, run [b]tesmiolauncher.exe[/b], enable [b]TesmioClock.dll[/b] and press [b]Launch[/b].
 
 The installer finds the game automatically, installs only the selected DLL and applies the tested Calendar Synchronizer settings. A backup of its configuration is created before any changes.
 
@@ -45,13 +54,9 @@ The installer finds the game automatically, installs only the selected DLL and a
 
 Do not enable the legacy [b]GameClock.dll[/b] together with [b]TesmioClock.dll[/b]. A new save is not required.
 
-[h1]Calibration[/h1]
-
-The tested configuration uses one calendar day per one full game day. Dawn begins around 05:00, daylight around 07:00, sunset around 20:00 and night around 22:00. The night part of the cycle may pass faster than daytime; this is normal Calendar Synchronizer behavior.
-
 [h1]Credits[/h1]
 
-Special thanks to [b]Tesmio / MaxLegend[/b] for Calendar Synchronizer and TesmioLoader. Tesmio Clock contains no independent calendar or day/night logic without the original synchronization mod.
+Thanks to [b]Tesmio / MaxLegend[/b] for Calendar Synchronizer and TesmioLoader. Tesmio Clock uses the original mod's calendar and day/night logic.
 
 [hr][/hr]
 
@@ -73,7 +78,6 @@ Calendar Synchronizer управляет длительностью календ
 [list]
 [*]24-часовой и 12-часовой AM/PM варианты.
 [*]Обновление времени с шагом 30 игровых минут.
-[*]Переключение календарной даты ровно в 00:00.
 [*]Синхронизация с рассветом, дневным освещением, закатом и ночью.
 [*]Единое аккуратное поле времени и даты в верхней панели.
 [*]Убрана ненужная всплывающая панель ванильного календаря.
@@ -90,11 +94,21 @@ Calendar Synchronizer управляет длительностью календ
 
 [h1]Установка и обновление[/h1]
 
-1. Установите TesmioLoader и Calendar Synchronizer.
-2. Подпишитесь на Tesmio Clock и откройте папку предмета Workshop.
-3. Запустите [b]INSTALL-TESMIO-CLOCK.bat[/b].
-4. Выберите `1` для 24-hour или `2` для 12-hour AM/PM.
-5. Запустите [b]tesmiolauncher.exe[/b], включите [b]TesmioClock.dll[/b] и нажмите [b]Launch[/b].
+1. Установите [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3773169177]TesmioLoader[/url] по инструкции автора.
+
+2. Подпишитесь на [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3779646468]Calendar Synchronizer[/url].
+
+3. Подпишитесь на Tesmio Clock и откройте точную папку предмета:
+[code]Steam\steamapps\workshop\content\784150\3780805717[/code]
+
+Как найти её через Steam: «Библиотека» → правой кнопкой по Workers & Resources: Soviet Republic → «Управление» → «Просмотреть локальные файлы». В проводнике вернитесь из `steamapps\common\SovietRepublic` в папку `steamapps`, затем откройте `workshop\content\784150\3780805717`.
+
+4. Запустите:
+[code]INSTALL-TESMIO-CLOCK.bat[/code]
+
+5. Выберите `1` для 24-hour или `2` для 12-hour AM/PM.
+
+6. Откройте папку игры, запустите [b]tesmiolauncher.exe[/b], включите [b]TesmioClock.dll[/b] и нажмите [b]Launch[/b].
 
 Установщик автоматически найдёт игру, установит только выбранную DLL и применит проверенные настройки Calendar Synchronizer. Перед изменением конфигурации создаётся резервная копия.
 
@@ -102,13 +116,9 @@ Calendar Synchronizer управляет длительностью календ
 
 Не включайте одновременно старый [b]GameClock.dll[/b] и [b]TesmioClock.dll[/b]. Новый мир не требуется.
 
-[h1]Калибровка[/h1]
-
-Рассвет начинается примерно в 05:00, светло становится около 07:00, закат начинается около 20:00, ночь — около 22:00. Ночная часть цикла может проходить быстрее дневной — это нормальная работа Calendar Synchronizer.
-
 [h1]Благодарность[/h1]
 
-Спасибо [b]Tesmio / MaxLegend[/b] за Calendar Synchronizer и TesmioLoader. Без оригинального мода синхронизации дополнение не имеет собственной логики календаря и дня/ночи.
+Спасибо [b]Tesmio / MaxLegend[/b] за Calendar Synchronizer и TesmioLoader. Tesmio Clock использует логику календаря и дня/ночи оригинального мода.
 
 [h1]Обратная связь / Feedback[/h1]
 

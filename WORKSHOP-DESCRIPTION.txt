@@ -33,8 +33,6 @@ Tesmio Clock добавляет цифровые часы в верхнюю па
 3. Подпишитесь на Tesmio Clock и откройте папку предмета Workshop:
 [code]Steam\steamapps\workshop\content\784150\3780805717[/code]
 
-Чтобы найти эту папку через Steam: откройте «Библиотеку», нажмите правой кнопкой мыши по [b]Workers & Resources: Soviet Republic[/b] и выберите [b]Управление → Просмотреть локальные файлы[/b]. В проводнике вернитесь из папки [code]steamapps\common\SovietRepublic[/code] в [code]steamapps[/code], затем откройте [code]workshop\content\784150\3780805717[/code].
-
 4. Запустите:
 [code]INSTALL-TESMIO-CLOCK.bat[/code]
 

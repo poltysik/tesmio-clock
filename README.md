@@ -1,4 +1,4 @@
-# Tesmio Clock 1.0.0
+# Tesmio Clock 1.1.0
 
 Tesmio Clock adds a readable digital clock to the top interface of
 **Workers & Resources: Soviet Republic**. It is an add-on for
@@ -12,6 +12,15 @@ independent timer.
 > Subscribe to and install the original author's mod first. All calendar-speed
 > and day/night synchronization logic belongs to Calendar Synchronizer; this
 > project adds the clock display and its calibrated integration.
+
+## What's new in 1.1.0
+
+- Adaptive placement for `1280×720`, `1366×768`, `1600×900`, `1920×1080`,
+  `2560×1440` and `3840×2160`.
+- Support for the game's custom interface scale setting.
+- Correct alignment for both 24-hour and AM/PM formats at compact UI scales.
+- Complete removal of the remaining vanilla calendar strip graphics.
+- Fixed building windows closing when changing the game speed from the top bar.
 
 The clock advances in 30-minute steps and is calibrated to the visual cycle:
 dawn begins around 05:00, daylight around 07:00, sunset around 20:00 and night
@@ -44,7 +53,7 @@ TesmioLoader update may require a new release.
 ## Automatic installation
 
 1. Install TesmioLoader and Calendar Synchronizer first.
-2. Download and extract `TesmioClock-1.0.0.zip`, or open the Workshop item folder.
+2. Download and extract `TesmioClock-1.1.0.zip`, or open the Workshop item folder.
 3. Run `INSTALL-TESMIO-CLOCK.bat`.
 4. Choose:
    - `1` for 24-hour time;
@@ -118,7 +127,7 @@ Place an `llvm-mingw` toolchain in `tools\llvm-mingw`, then run:
 
 ```powershell
 .\build-portable.ps1
-.\package-release.ps1 -Version 1.0.0
+.\package-release.ps1 -Version 1.1.0
 ```
 
 ## Russian documentation

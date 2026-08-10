@@ -1,4 +1,4 @@
-param([string]$Version = "1.0.0")
+param([string]$Version = "1.1.0")
 
 $ErrorActionPreference = "Stop"
 $dist = Join-Path $PSScriptRoot "dist"
@@ -36,4 +36,3 @@ Get-FileHash -Algorithm SHA256 -LiteralPath `
     (Join-Path $releaseRoot "variants\24-hour\TesmioClock.dll"),
     (Join-Path $releaseRoot "variants\12-hour-am-pm\TesmioClock.dll"),
     $zip | Select-Object Path, Hash
-

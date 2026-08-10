@@ -48,6 +48,7 @@ static FontPrintFn o_FontPrintLeft = NULL;
 static FontPrintFn o_FontPrintRight = NULL;
 static bool g_dateTextPending = false;
 static float g_dateTextShift = 0.0f;
+static float g_dateLayoutScale = 1.0f;
 static const bool g_showVanillaCalendarForTesting = false;
 
 enum CachedTextKind
@@ -106,18 +107,6 @@ static int ScreenWidth(void)
     return width >= 800 && width <= 16384 ? width : 2560;
 }
 
-static bool CurrentPanelIsCalendarHitArea(void)
-{
-    const float* pos = (const float*)(g_base + G_PANEL_POS);
-    const float* size = (const float*)(g_base + G_PANEL_SIZE);
-    const float width = (float)ScreenWidth();
-    return _finite(pos[0]) && _finite(pos[1]) &&
-           _finite(size[0]) && _finite(size[1]) &&
-           pos[0] >= width * 0.25f && pos[0] <= width * 0.48f &&
-           pos[1] >= 0.0f && pos[1] <= 170.0f &&
-           size[0] > 1.0f && size[1] > 1.0f;
-}
-
 static bool CurrentPanelIsOldCalendarControl(void)
 {
     const float* pos = (const float*)(g_base + G_PANEL_POS);
@@ -168,6 +157,16 @@ static const C3DRect* ExtendDateField(const C3DRect* rect,
     if (!topHud || !RectIsDateField(rect)) return rect;
     *extended = *rect;
     int originalWidth = rect->right - rect->left;
+    // The stock date field is 192 px wide at the reference UI scale.
+    // Its actual width follows both resolution and the user's UI scale, so it
+    // is a safe anchor for every horizontal offset inside the extended field.
+    float layoutScale = (float)originalWidth / 192.0f;
+    if (_finite(layoutScale))
+    {
+        if (layoutScale < 0.45f) layoutScale = 0.45f;
+        if (layoutScale > 2.50f) layoutScale = 2.50f;
+        g_dateLayoutScale = layoutScale;
+    }
     extended->left -= originalWidth / 12;
     extended->right += originalWidth / 6;
     return extended;
@@ -205,8 +204,36 @@ static bool LooksLikeMoney(const wchar_t* text)
 static float CenterTopValueY(float y, const wchar_t* text,
                              void* returnAddress)
 {
-    return IsGameplayTopHud(returnAddress) && LooksLikeMoney(text)
-        ? y + 3.0f : y;
+    if (!IsGameplayTopHud(returnAddress) || !LooksLikeMoney(text)) return y;
+#ifdef GAMECLOCK_24H
+    // At compact UI scales the font baseline sits too close to the lower
+    // border. Keep the approved 1920x1080 position and progressively lift the
+    // value line, reaching a two-pixel correction at 1366x768.
+    float compactLift = (1.0f - g_dateLayoutScale) * 7.0f;
+    if (compactLift < 0.0f) compactLift = 0.0f;
+    if (compactLift > 2.0f) compactLift = 2.0f;
+    return y + 3.0f - compactLift;
+#else
+    float compactLift = (1.0f - g_dateLayoutScale) * 7.0f;
+    if (compactLift < 0.0f) compactLift = 0.0f;
+    if (compactLift > 2.0f) compactLift = 2.0f;
+    return y + 3.0f - compactLift;
+#endif
+}
+
+static float DateTextY(float y)
+{
+#ifdef GAMECLOCK_24H
+    float compactLift = (1.0f - g_dateLayoutScale) * 7.0f;
+    if (compactLift < 0.0f) compactLift = 0.0f;
+    if (compactLift > 2.0f) compactLift = 2.0f;
+    return y + 3.0f - compactLift;
+#else
+    float compactLift = (1.0f - g_dateLayoutScale) * 7.0f;
+    if (compactLift < 0.0f) compactLift = 0.0f;
+    if (compactLift > 2.0f) compactLift = 2.0f;
+    return y + 3.0f - compactLift;
+#endif
 }
 
 static void FormatClock(wchar_t* output, size_t capacity)
@@ -290,9 +317,12 @@ static void PrintSeparatedClockDate(CachedTextKind kind, void* manager,
     // separately so it can share the AM/PM variant's vertical level.
     if (kind == TEXT_MANAGER_RIGHT && manager)
     {
+        const float scale = g_dateLayoutScale;
         o_PrintRight(manager, font, x, y, color, L"%ls", date);
-        o_PrintRight(manager, font, x - 168.0f, y - 2.0f, color, L"|");
-        o_PrintRight(manager, font, x - 188.0f, y, color, L"%ls", clock);
+        o_PrintRight(manager, font, x - 168.0f * scale,
+                     y - 2.0f * scale, color, L"|");
+        o_PrintRight(manager, font, x - 183.0f * scale,
+                     y, color, L"%ls", clock);
         return;
     }
     wchar_t combined[256] = {};
@@ -314,11 +344,13 @@ static void PrintSeparatedClockDate(CachedTextKind kind, void* manager,
         // The visible HUD label is right-aligned (renderer kind 3). Keep that
         // exact coordinate system for every part; center-aligned printing is
         // invalid here because the HUD uses a translated negative X origin.
-        const float rightAnchor = x + 4.0f;
+        const float scale = g_dateLayoutScale;
+        const float rightAnchor = x + 4.0f * scale;
         o_PrintRight(manager, font, rightAnchor, y, color, L"%ls", date);
-        o_PrintRight(manager, font, rightAnchor - 158.0f, y - 2.0f,
+        o_PrintRight(manager, font, rightAnchor - 158.0f * scale,
+                     y - 2.0f * scale,
                      color, L"|");
-        o_PrintRight(manager, font, rightAnchor - 173.0f, y,
+        o_PrintRight(manager, font, rightAnchor - 163.0f * scale, y,
                      color, L"%ls", clock);
         return;
     }
@@ -396,7 +428,7 @@ static void h_PrintLeft(void* manager, void* font, float x, float y,
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
     if (ConsumeDateText(x, text, &shiftedX))
     {
-        drawY = y + 3.0f;
+        drawY = DateTextY(y);
         CacheManagerDate(TEXT_MANAGER_LEFT, manager, font, shiftedX, drawY,
                          color, text);
         PrintSeparatedClockDate(TEXT_MANAGER_LEFT, manager, font,
@@ -419,7 +451,7 @@ static void h_PrintCenter(void* manager, void* font, float x, float y,
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
     if (ConsumeDateText(x, text, &shiftedX))
     {
-        drawY = y + 3.0f;
+        drawY = DateTextY(y);
         CacheManagerDate(TEXT_MANAGER_CENTER, manager, font, shiftedX, drawY,
                          color, text);
         PrintSeparatedClockDate(TEXT_MANAGER_CENTER, manager, font,
@@ -442,7 +474,7 @@ static void h_PrintRight(void* manager, void* font, float x, float y,
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
     if (ConsumeDateText(x, text, &shiftedX))
     {
-        drawY = y + 3.0f;
+        drawY = DateTextY(y);
         CacheManagerDate(TEXT_MANAGER_RIGHT, manager, font, shiftedX, drawY,
                          color, text);
         PrintSeparatedClockDate(TEXT_MANAGER_RIGHT, manager, font,
@@ -465,7 +497,7 @@ static void h_FontPrintLeft(void* font, float x, float y, unsigned long color,
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
     if (ConsumeDateText(x, text, &shiftedX))
     {
-        drawY = y + 3.0f;
+        drawY = DateTextY(y);
         CacheFontDate(TEXT_FONT_LEFT, font, shiftedX, drawY, color, text);
         PrintSeparatedClockDate(TEXT_FONT_LEFT, NULL, font, shiftedX, drawY,
                                 color, text);
@@ -486,7 +518,7 @@ static void h_FontPrintRight(void* font, float x, float y,
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
     if (ConsumeDateText(x, text, &shiftedX))
     {
-        drawY = y + 3.0f;
+        drawY = DateTextY(y);
         CacheFontDate(TEXT_FONT_RIGHT, font, shiftedX, drawY, color, text);
         PrintSeparatedClockDate(TEXT_FONT_RIGHT, NULL, font, shiftedX, drawY,
                                 color, text);
@@ -500,8 +532,9 @@ static void h_PanelDraw(void* panel, float u0, float v0, float u1, float v1,
 {
     uintptr_t rva = ReturnRva(__builtin_return_address(0));
     if (!g_showVanillaCalendarForTesting &&
-        IsGameplayTopHud(__builtin_return_address(0)) &&
-        CurrentPanelIsOldCalendarControl())
+        (rva == 0x31C15A || rva == 0x31C306 ||
+         (IsGameplayTopHud(__builtin_return_address(0)) &&
+          CurrentPanelIsOldCalendarControl())))
     {
         RenderCachedClockDate();
         return;
@@ -569,11 +602,10 @@ static bool h_PanelCollision(void* panel, void* mouse, float x, float y)
     void* caller = __builtin_return_address(0);
     uintptr_t rva = ReturnRva(caller);
 
-    // Keep the vanilla top bar completely untouched. Only make the calendar
-    // hover/click region passive so its blue expansion cannot appear.
-    if (!g_showVanillaCalendarForTesting &&
-        (rva == 0x319EBE || rva == 0x31A115 ||
-         (IsGameplayTopHud(caller) && CurrentPanelIsCalendarHitArea())))
+    // Only the calendar progress strip uses this collision call. Keeping the
+    // filter tied to its exact call site prevents speed-button clicks from
+    // falling through to the world and deselecting an open building window.
+    if (!g_showVanillaCalendarForTesting && rva == 0x31C1A6)
         return false;
 
     return o_PanelCollision(panel, mouse, x, y);
@@ -591,11 +623,11 @@ extern "C" __declspec(dllexport) int TsmPluginInit(const TsmHost* host,
     g_base = host->exeBase;
     info->name = "Tesmio Clock";
 #ifdef GAMECLOCK_24H
-    info->version = "1.0.0 (24-hour)";
-    H->log("Tesmio Clock 1.0.0: 24-hour variant");
+    info->version = "1.1.0 (24-hour)";
+    H->log("Tesmio Clock 1.1.0: 24-hour variant");
 #else
-    info->version = "1.0.0 (AM/PM)";
-    H->log("Tesmio Clock 1.0.0: AM/PM variant");
+    info->version = "1.1.0 (AM/PM)";
+    H->log("Tesmio Clock 1.1.0: AM/PM variant");
 #endif
     return 0;
 }

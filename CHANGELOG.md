@@ -10,13 +10,13 @@
 - Restored reliable clock placement after the 10 August 2026 game update.
 - The top-bar field now uses the active game window width as its primary
   layout anchor instead of relying only on a fixed internal screen address.
-- Added support for compact and non-standard window sizes such as 1300×768.
+- Added support for compact windows and the game's custom interface scale.
 
 ## 1.1.0 — 2026-08-10
 
 - Added adaptive clock and date placement based on the actual top-bar field size.
-- Tested 24-hour and AM/PM layouts at 1280×720, 1366×768, 1600×900,
-  1920×1080, 2560×1440 and 3840×2160.
+- Tested 24-hour and AM/PM layouts at 1366×768, 1440×900, 1600×900,
+  1920×1080 and 2560×1440.
 - Added support for the game's custom interface scale setting.
 - Fully removed the remaining visual layer of the vanilla calendar strip.
 - Fixed building windows closing when the game speed was changed from the top bar.

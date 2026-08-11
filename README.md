@@ -19,8 +19,8 @@ independent timer.
   `b0.3.6` / plugin API 4, and Calendar Synchronizer `2.1`.
 - Restored live time updates in both 24-hour and AM/PM variants after the
   Calendar Synchronizer update.
-- Adaptive placement for `1280×720`, `1366×768`, `1600×900`, `1920×1080`,
-  `2560×1440` and `3840×2160`.
+- In-game verification at `1366×768`, `1440×900`, `1600×900`,
+  `1920×1080` and `2560×1440`.
 - Support for the game's custom interface scale setting.
 - Correct alignment for both 24-hour and AM/PM formats at compact UI scales.
 - Complete removal of the remaining vanilla calendar strip graphics.

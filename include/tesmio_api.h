@@ -49,7 +49,7 @@
 // Bumped whenever anything below changes at all - a new field, a new service, a
 // new constant. It is what a plugin reports back through TsmPluginApiVersion,
 // and it is how the host knows what that plugin was built to expect.
-#define TSM_API_VERSION 3u
+#define TSM_API_VERSION 4u
 
 // The oldest plugin this host still initialises, and the whole of the
 // compatibility promise: the host accepts anything in
@@ -207,6 +207,10 @@ typedef struct TsmHost
     // choice. Provide from Init, consume from Start.
     int         (*provide)(const char* service, unsigned version, const void* iface);
     const void* (*consume)(const char* service, unsigned version);
+
+    // ---- v4 ----
+    // Resolved VFS root used by TesmioLoader b0.3.6 and newer.
+    const char* vfsRoot;
 
 } TsmHost;
 

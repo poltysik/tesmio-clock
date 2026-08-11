@@ -1,4 +1,4 @@
-# Tesmio Clock 1.1.0 — русская инструкция
+# Tesmio Clock 1.1.1 — русская инструкция
 
 Tesmio Clock добавляет в верхнюю панель **Workers & Resources: Soviet Republic**
 понятные цифровые часы. Это дополнение для
@@ -13,8 +13,12 @@ Tesmio Clock добавляет в верхнюю панель **Workers & Resou
 > логика замедления календаря и синхронизации дня и ночи принадлежит Calendar
 > Synchronizer; наш проект добавляет отображение часов и проверенную калибровку.
 
-## Что изменилось в версии 1.1.0
+## Что изменилось в версии 1.1.1
 
+- Добавлена совместимость с Workers & Resources: Soviet Republic `1.1.1.9`,
+  TesmioLoader `b0.3.6` / API 4 и Calendar Synchronizer `2.1`.
+- Восстановлено обновление времени после изменения внутреннего таймера
+  Calendar Synchronizer; исправлены оба варианта — 24-часовой и AM/PM.
 - Интерфейс часов адаптирован для разрешений `1280×720`, `1366×768`,
   `1600×900`, `1920×1080`, `2560×1440` и `3840×2160`.
 - Добавлена поддержка нестандартного масштаба интерфейса из настроек игры.
@@ -41,12 +45,12 @@ Tesmio Clock добавляет в верхнюю панель **Workers & Resou
 
 ## Требования
 
-- Workers & Resources: Soviet Republic `1.1.1.7`, 64-битная DX11-версия.
+- Workers & Resources: Soviet Republic `1.1.1.9`, 64-битная DX11-версия.
 - [TesmioLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3773169177)
-  API 3 / launcher `b0.3.4`.
+  API 4 / launcher `b0.3.6`.
 - Установленный
   [Calendar Synchronizer](https://steamcommunity.com/sharedfiles/filedetails/?id=3779646468)
-  (`daynight.dll` и `daynight.ini` в папке плагинов TesmioLoader).
+  версии `2.1` (`daynight.dll` и `daynight.ini` в папке плагинов TesmioLoader).
 - Запуск игры через `tesmiolauncher.exe`.
 
 После обновления игры или TesmioLoader может потребоваться новая версия мода.
@@ -54,7 +58,7 @@ Tesmio Clock добавляет в верхнюю панель **Workers & Resou
 ## Автоматическая установка
 
 1. Сначала установите TesmioLoader и Calendar Synchronizer.
-2. Скачайте и распакуйте `TesmioClock-1.1.0.zip` либо откройте папку предмета Workshop.
+2. Скачайте и распакуйте `TesmioClock-1.1.1.zip` либо откройте папку предмета Workshop.
 3. Запустите `INSTALL-TESMIO-CLOCK.bat`.
 4. Выберите:
    - `1` — 24-часовой формат;

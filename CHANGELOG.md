@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.1 — 2026-08-11
+
+- Updated for Workers & Resources: Soviet Republic 1.1.1.9,
+  TesmioLoader b0.3.6 / plugin API 4, and Calendar Synchronizer 2.1.
+- Restored the live clock after Calendar Synchronizer changed its internal
+  timer storage; both 24-hour and AM/PM variants now use the verified game
+  world timer maintained by the synchronizer.
+- Restored reliable clock placement after the 10 August 2026 game update.
+- The top-bar field now uses the active game window width as its primary
+  layout anchor instead of relying only on a fixed internal screen address.
+- Added support for compact and non-standard window sizes such as 1300×768.
+
 ## 1.1.0 — 2026-08-10
 
 - Added adaptive clock and date placement based on the actual top-bar field size.

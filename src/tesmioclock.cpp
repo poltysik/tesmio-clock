@@ -9,7 +9,10 @@
 static const TsmHost* H = NULL;
 static unsigned char* g_base = NULL;
 static const char* ENGINE_DLL = "C3DDLL64.dll";
-static const uintptr_t G_WORLD_PTR = 0x9941F0;
+// SOVIET64.exe 1.1.1.9: the live world object is static storage, not a
+// pointer-sized global. Calendar Synchronizer 2.1 reads and writes this same
+// object in its verified weather hook.
+static const uintptr_t G_WORLD_OBJECT = 0x9D4F10;
 static const char* PANEL_COLLISION =
     "?Collision@C3D_PANEL2D@@QEAA_NVC3DVECTOR3@@MM@Z";
 static const char* PANEL_DRAW = "?Draw@C3D_PANEL2D@@QEAAXMMMMM_N@Z";
@@ -103,6 +106,22 @@ static bool IsGameplayTopHud(void* returnAddress)
 
 static int ScreenWidth(void)
 {
+    HWND window = GetForegroundWindow();
+    if (window)
+    {
+        DWORD processId = 0;
+        GetWindowThreadProcessId(window, &processId);
+        if (processId == GetCurrentProcessId())
+        {
+            RECT client = {};
+            if (GetClientRect(window, &client))
+            {
+                int clientWidth = client.right - client.left;
+                if (clientWidth >= 800 && clientWidth <= 16384)
+                    return clientWidth;
+            }
+        }
+    }
     int width = *(int*)(g_base + G_SCREEN_WIDTH);
     return width >= 800 && width <= 16384 ? width : 2560;
 }
@@ -239,17 +258,11 @@ static float DateTextY(float y)
 static void FormatClock(wchar_t* output, size_t capacity)
 {
     float progress = -1.0f;
-    HMODULE daynight = GetModuleHandleA("daynight.dll");
-    if (daynight)
-    {
-        // daynight 1.0 keeps the live, unmodified 0..60 day timer here.
-        progress = *(float*)((unsigned char*)daynight + 0x1E018);
-    }
-    if (!_finite(progress) || progress < 0.0f || progress > 60.5f)
-    {
-        unsigned char* world = *(unsigned char**)(g_base + G_WORLD_PTR);
-        if (world) progress = *(float*)(world + 0x59C);
-    }
+    // Calendar Synchronizer 2.1 no longer exposes the private cache used by
+    // version 1.0. Its supported source of truth is the game's own 0..60
+    // time-in-day field, which the synchronizer deliberately keeps current.
+    unsigned char* world = g_base + G_WORLD_OBJECT;
+    progress = *(float*)(world + 0x59C);
     if (!_finite(progress) || progress < 0.0f || progress > 60.5f)
         progress = 0.0f;
     // daynight offset=0.5825 rotates the measured lighting cycle so the
@@ -532,7 +545,7 @@ static void h_PanelDraw(void* panel, float u0, float v0, float u1, float v1,
 {
     uintptr_t rva = ReturnRva(__builtin_return_address(0));
     if (!g_showVanillaCalendarForTesting &&
-        (rva == 0x31C15A || rva == 0x31C306 ||
+        (rva == 0x31C1FA || rva == 0x31C3A6 ||
          (IsGameplayTopHud(__builtin_return_address(0)) &&
           CurrentPanelIsOldCalendarControl())))
     {
@@ -540,7 +553,7 @@ static void h_PanelDraw(void* panel, float u0, float v0, float u1, float v1,
         return;
     }
     o_PanelDraw(panel, u0, v0, u1, v1, rotation, alpha);
-    if (rva == 0x31C306) RenderCachedClockDate();
+    if (rva == 0x31C3A6) RenderCachedClockDate();
 }
 
 static void h_Panel9Patch(void* panel, const C3DRect* rect, float a, float b,
@@ -548,7 +561,7 @@ static void h_Panel9Patch(void* panel, const C3DRect* rect, float a, float b,
 {
     void* caller = __builtin_return_address(0);
     bool topHud = IsGameplayTopHud(caller);
-    bool dateFieldCall = ReturnRva(caller) == 0x33571B;
+    bool dateFieldCall = ReturnRva(caller) == 0x3357BB;
     if (!g_showVanillaCalendarForTesting && topHud &&
         RectIsOldCalendarControl(rect))
         return;
@@ -575,7 +588,7 @@ static void h_PanelNew9Patch(void* panel, const C3DRect* rect, float a,
 {
     void* caller = __builtin_return_address(0);
     bool topHud = IsGameplayTopHud(caller);
-    bool dateFieldCall = ReturnRva(caller) == 0x33571B;
+    bool dateFieldCall = ReturnRva(caller) == 0x3357BB;
     if (!g_showVanillaCalendarForTesting && topHud &&
         RectIsOldCalendarControl(rect))
         return;
@@ -605,7 +618,7 @@ static bool h_PanelCollision(void* panel, void* mouse, float x, float y)
     // Only the calendar progress strip uses this collision call. Keeping the
     // filter tied to its exact call site prevents speed-button clicks from
     // falling through to the world and deselecting an open building window.
-    if (!g_showVanillaCalendarForTesting && rva == 0x31C1A6)
+    if (!g_showVanillaCalendarForTesting && rva == 0x31C246)
         return false;
 
     return o_PanelCollision(panel, mouse, x, y);
@@ -623,11 +636,11 @@ extern "C" __declspec(dllexport) int TsmPluginInit(const TsmHost* host,
     g_base = host->exeBase;
     info->name = "Tesmio Clock";
 #ifdef GAMECLOCK_24H
-    info->version = "1.1.0 (24-hour)";
-    H->log("Tesmio Clock 1.1.0: 24-hour variant");
+    info->version = "1.1.1 (24-hour)";
+    H->log("Tesmio Clock 1.1.1: 24-hour variant");
 #else
-    info->version = "1.1.0 (AM/PM)";
-    H->log("Tesmio Clock 1.1.0: AM/PM variant");
+    info->version = "1.1.1 (AM/PM)";
+    H->log("Tesmio Clock 1.1.1: AM/PM variant");
 #endif
     return 0;
 }

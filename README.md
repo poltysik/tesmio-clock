@@ -1,4 +1,4 @@
-# Tesmio Clock 1.1.1
+# Tesmio Clock 1.1.2
 
 Tesmio Clock adds a readable digital clock to the top interface of
 **Workers & Resources: Soviet Republic**. It is an add-on for
@@ -13,7 +13,14 @@ independent timer.
 > and day/night synchronization logic belongs to Calendar Synchronizer; this
 > project adds the clock display and its calibrated integration.
 
-## What's new in 1.1.1
+## What's new in 1.1.2
+
+- Fixed a crash when selecting aircraft, horse-drawn vehicles from other mods,
+  and horse-drawn vehicles from the Early Start DLC.
+- Clock text processing now safely handles non-standard game and mod text.
+- The fix is included in both the 24-hour and AM/PM variants.
+
+## Previous 1.1.1 compatibility update
 
 - Updated for Workers & Resources: Soviet Republic `1.1.1.9`, TesmioLoader
   `b0.3.6` / plugin API 4, and Calendar Synchronizer `2.1`.
@@ -58,7 +65,7 @@ TesmioLoader update may require a new release.
 ## Automatic installation
 
 1. Install TesmioLoader and Calendar Synchronizer first.
-2. Download and extract `TesmioClock-1.1.1.zip`, or open the Workshop item folder.
+2. Download and extract `TesmioClock-1.1.2.zip`, or open the Workshop item folder.
 3. Run `INSTALL-TESMIO-CLOCK.bat`.
 4. Choose:
    - `1` for 24-hour time;
@@ -132,7 +139,7 @@ Place an `llvm-mingw` toolchain in `tools\llvm-mingw`, then run:
 
 ```powershell
 .\build-portable.ps1
-.\package-release.ps1 -Version 1.1.1
+.\package-release.ps1 -Version 1.1.2
 ```
 
 ## Russian documentation

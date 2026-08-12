@@ -88,6 +88,26 @@ static CachedDateText g_cachedDate = {};
 static CachedDatePatch g_cachedPatch = {};
 static wchar_t g_lastRenderedClockDate[256] = {};
 
+// The game's text API is printf-like, but some vehicle and building mods pass
+// strings which the secure UCRT formatter considers invalid (for example a
+// literal or incomplete '%' sequence).  _vsnwprintf_s handles that by calling
+// invoke_watson and terminating the entire game.  The legacy bounded formatter
+// reports the failure instead, which lets us fall back to the original text.
+static void FormatGameText(wchar_t* output, size_t capacity,
+                           const wchar_t* format, va_list args)
+{
+    if (!output || capacity == 0) return;
+    output[0] = L'\0';
+    if (!format) return;
+
+    const int written = _vsnwprintf(output, capacity - 1, format, args);
+    output[capacity - 1] = L'\0';
+    if (written < 0)
+    {
+        wcsncpy_s(output, capacity, format, _TRUNCATE);
+    }
+}
+
 static const uintptr_t G_PANEL_POS = 0x9BE2F0;
 static const uintptr_t G_PANEL_SIZE = 0x9BE2E8;
 static const uintptr_t G_SCREEN_WIDTH = 0x99528C;
@@ -435,7 +455,7 @@ static void h_PrintLeft(void* manager, void* font, float x, float y,
     wchar_t text[2048] = {};
     va_list args;
     va_start(args, format);
-    if (format) _vsnwprintf_s(text, 2048, _TRUNCATE, format, args);
+    FormatGameText(text, 2048, format, args);
     va_end(args);
     float shiftedX = x;
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
@@ -458,7 +478,7 @@ static void h_PrintCenter(void* manager, void* font, float x, float y,
     wchar_t text[2048] = {};
     va_list args;
     va_start(args, format);
-    if (format) _vsnwprintf_s(text, 2048, _TRUNCATE, format, args);
+    FormatGameText(text, 2048, format, args);
     va_end(args);
     float shiftedX = x;
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
@@ -481,7 +501,7 @@ static void h_PrintRight(void* manager, void* font, float x, float y,
     wchar_t text[2048] = {};
     va_list args;
     va_start(args, format);
-    if (format) _vsnwprintf_s(text, 2048, _TRUNCATE, format, args);
+    FormatGameText(text, 2048, format, args);
     va_end(args);
     float shiftedX = x;
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
@@ -504,7 +524,7 @@ static void h_FontPrintLeft(void* font, float x, float y, unsigned long color,
     wchar_t text[2048] = {};
     va_list args;
     va_start(args, format);
-    if (format) _vsnwprintf_s(text, 2048, _TRUNCATE, format, args);
+    FormatGameText(text, 2048, format, args);
     va_end(args);
     float shiftedX = x;
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
@@ -525,7 +545,7 @@ static void h_FontPrintRight(void* font, float x, float y,
     wchar_t text[2048] = {};
     va_list args;
     va_start(args, format);
-    if (format) _vsnwprintf_s(text, 2048, _TRUNCATE, format, args);
+    FormatGameText(text, 2048, format, args);
     va_end(args);
     float shiftedX = x;
     float drawY = CenterTopValueY(y, text, __builtin_return_address(0));
@@ -636,11 +656,11 @@ extern "C" __declspec(dllexport) int TsmPluginInit(const TsmHost* host,
     g_base = host->exeBase;
     info->name = "Tesmio Clock";
 #ifdef GAMECLOCK_24H
-    info->version = "1.1.1 (24-hour)";
-    H->log("Tesmio Clock 1.1.1: 24-hour variant");
+    info->version = "1.1.2 (24-hour)";
+    H->log("Tesmio Clock 1.1.2: 24-hour variant");
 #else
-    info->version = "1.1.1 (AM/PM)";
-    H->log("Tesmio Clock 1.1.1: AM/PM variant");
+    info->version = "1.1.2 (AM/PM)";
+    H->log("Tesmio Clock 1.1.2: AM/PM variant");
 #endif
     return 0;
 }

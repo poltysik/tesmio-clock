@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2 — 2026-08-12
+
+- Fixed a crash when selecting aircraft, horse-drawn vehicles from other mods,
+  and horse-drawn vehicles included with the Early Start DLC.
+- Made all clock text hooks tolerate non-standard game and mod text instead of
+  terminating the game when such a vehicle window is opened.
+- The fix applies to both the 24-hour and AM/PM variants.
+
 ## 1.1.1 — 2026-08-11
 
 - Updated for Workers & Resources: Soviet Republic 1.1.1.9,

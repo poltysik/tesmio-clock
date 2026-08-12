@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.3 — 2026-08-12
+
+- Added adaptive placement for super-ultrawide and multi-monitor resolutions.
+- Removed the date-field width check that incorrectly depended on the total
+  screen width and could place the clock over the currency field at 32:9.
+- Verified the top-bar layout in game at 3840×1080 and 5120×1440.
+- Added support for 5760×1080 and 7680×2160 layouts through the same adaptive
+  date-field detection.
+- The update applies to both the 24-hour and AM/PM variants.
+
 ## 1.1.2 — 2026-08-12
 
 - Fixed a crash when selecting aircraft, horse-drawn vehicles from other mods,

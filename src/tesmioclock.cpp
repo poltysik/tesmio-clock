@@ -182,10 +182,15 @@ static bool RectIsDateField(const C3DRect* rect)
     float x = (rect->left + rect->right) * 0.5f;
     float y = (rect->top + rect->bottom) * 0.5f;
     float width = (float)ScreenWidth();
+    // UI element sizes follow the vertical resolution and the user's UI
+    // scale, not the monitor aspect ratio.  Comparing the field width with a
+    // percentage of the full screen rejected the real date field on 32:9
+    // displays (5120x1440), especially with a compact custom UI scale.
+    // Keep horizontal position validation, but identify the stock field by
+    // its own plausible pixel size instead of the total monitor width.
     return x >= width * 0.32f && x <= width * 0.48f &&
            y >= 0.0f && y <= 50.0f &&
-           rectWidth >= (int)(width * 0.05f) &&
-           rectWidth <= (int)(width * 0.15f) &&
+           rectWidth >= 80 && rectWidth <= 640 &&
            rectHeight <= 80;
 }
 
@@ -656,11 +661,11 @@ extern "C" __declspec(dllexport) int TsmPluginInit(const TsmHost* host,
     g_base = host->exeBase;
     info->name = "Tesmio Clock";
 #ifdef GAMECLOCK_24H
-    info->version = "1.1.2 (24-hour)";
-    H->log("Tesmio Clock 1.1.2: 24-hour variant");
+    info->version = "1.1.3 (24-hour)";
+    H->log("Tesmio Clock 1.1.3: 24-hour variant");
 #else
-    info->version = "1.1.2 (AM/PM)";
-    H->log("Tesmio Clock 1.1.2: AM/PM variant");
+    info->version = "1.1.3 (AM/PM)";
+    H->log("Tesmio Clock 1.1.3: AM/PM variant");
 #endif
     return 0;
 }

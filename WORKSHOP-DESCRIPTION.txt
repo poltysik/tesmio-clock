@@ -1,7 +1,7 @@
 [h1]Tesmio Clock — digital clock for the top panel[/h1]
 
 [b]English documentation, source code and installation instructions are available on GitHub:[/b]
-[url=https://github.com/poltysik/tesmio-clock]https://github.com/poltysik/tesmio-clock[/url]
+[url=https://github.com/poltysik/tesmio-clock/]GitHub — Tesmio Clock[/url]
 
 [h1]Tesmio Clock — цифровые часы в верхней панели[/h1]
 

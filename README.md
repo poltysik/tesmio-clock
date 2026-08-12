@@ -47,6 +47,15 @@ The clock advances in 30-minute steps and is calibrated to the visual cycle:
 dawn begins around 05:00, daylight around 07:00, sunset around 20:00 and night
 around 22:00. The calendar date changes at 00:00.
 
+## Checking the installed version
+
+- `TESMIO-CLOCK-VERSION.txt` in the Workshop item folder shows the package
+  version downloaded by Steam.
+- `tesmioloader\build\plugins\TesmioClock.version.txt` shows the version and
+  display format actually copied into TesmioLoader by the installer.
+- If these versions differ, close the game and run `INSTALL-TESMIO-CLOCK.bat`
+  again.
+
 ## Features
 
 - Two separately tested display formats:

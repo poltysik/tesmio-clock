@@ -24,7 +24,7 @@ foreach ($variant in @("24-hour", "12-hour-am-pm")) {
 foreach ($file in @(
     "INSTALL-TESMIO-CLOCK.bat", "install.ps1", "clock-format.ini",
     "README.md", "GUIDE-RU.md", "CHANGELOG.md", "LICENSE",
-    "WORKSHOP-DESCRIPTION.txt"
+    "WORKSHOP-DESCRIPTION.txt", "TESMIO-CLOCK-VERSION.txt"
 )) {
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot $file) -Destination $releaseRoot
 }

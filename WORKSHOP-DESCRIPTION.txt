@@ -67,6 +67,8 @@ Tesmio Clock добавляет цифровые часы в верхнюю па
 
 [b]Важно:[/b] после обновления Tesmio Clock повторно запустите [b]INSTALL-TESMIO-CLOCK.bat[/b]. Steam обновляет папку предмета Workshop, но не заменяет автоматически DLL, ранее скопированную в TesmioLoader.
 
+[b]Проверка версии:[/b] файл [b]TESMIO-CLOCK-VERSION.txt[/b] в папке Workshop показывает скачанную версию, а файл [b]TesmioClock.version.txt[/b] в папке [b]tesmioloader\build\plugins[/b] — версию, реально установленную в лаунчер.
+
 Чтобы изменить формат времени, закройте игру и повторно запустите [b]INSTALL-TESMIO-CLOCK.bat[/b]. Новый мир не требуется.
 
 [h1]Обратная связь[/h1]

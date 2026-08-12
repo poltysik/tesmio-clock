@@ -6,6 +6,15 @@ param(
 
 $ErrorActionPreference = "Stop"
 $packageRoot = $PSScriptRoot
+$packageVersionFile = Join-Path $packageRoot "TESMIO-CLOCK-VERSION.txt"
+$packageVersion = "unknown"
+if (Test-Path -LiteralPath $packageVersionFile) {
+    $versionMatch = [regex]::Match(
+        (Get-Content -Raw -LiteralPath $packageVersionFile),
+        '(?im)^\s*Package version\s*:\s*([0-9]+(?:\.[0-9]+)*)\s*$'
+    )
+    if ($versionMatch.Success) { $packageVersion = $versionMatch.Groups[1].Value }
+}
 
 function Find-GameDirectory {
     param([string]$Requested)
@@ -148,9 +157,20 @@ $sourceHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $sourceDll).Hash
 $installedHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $pluginDir "TesmioClock.dll")).Hash
 if ($sourceHash -ne $installedHash) { throw "Installed DLL verification failed." }
 
+$installedVersion = @"
+Tesmio Clock
+Installed version: $packageVersion
+Format: $selected
+Installed at: $([DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss'))
+Workshop source: $packageRoot
+SHA256: $installedHash
+"@
+Set-Content -LiteralPath (Join-Path $pluginDir "TesmioClock.version.txt") -Value $installedVersion -Encoding UTF8
+
 Write-Host ""
 Write-Host "Tesmio Clock installed successfully."
 Write-Host "Game:   $gameRoot"
+Write-Host "Version: $packageVersion"
 Write-Host "Format: $selected"
 Write-Host "SHA256: $installedHash"
 Write-Host "Start the game through tesmiolauncher.exe and enable TesmioClock.dll."

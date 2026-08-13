@@ -661,11 +661,11 @@ extern "C" __declspec(dllexport) int TsmPluginInit(const TsmHost* host,
     g_base = host->exeBase;
     info->name = "Tesmio Clock";
 #ifdef GAMECLOCK_24H
-    info->version = "1.1.3 (24-hour)";
-    H->log("Tesmio Clock 1.1.3: 24-hour variant");
+    info->version = "1.1.4 (24-hour)";
+    H->log("Tesmio Clock 1.1.4: 24-hour variant");
 #else
-    info->version = "1.1.3 (AM/PM)";
-    H->log("Tesmio Clock 1.1.3: AM/PM variant");
+    info->version = "1.1.4 (AM/PM)";
+    H->log("Tesmio Clock 1.1.4: AM/PM variant");
 #endif
     return 0;
 }

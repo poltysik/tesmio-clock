@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.4 — 2026-08-14
+
+- Fixed vehicles moving many times faster than intended after installing
+  Tesmio Clock alongside Calendar Synchronizer.
+- The installer now explicitly restores `vehicle_scale = 1`, keeping the base
+  game's vehicle speed while Calendar Synchronizer stretches the calendar day.
+- The fix is applied whenever the installer is run and works with both the
+  24-hour and AM/PM variants.
+
 ## 1.1.3 — 2026-08-12
 
 - Added adaptive placement for super-ultrawide and multi-monitor resolutions.

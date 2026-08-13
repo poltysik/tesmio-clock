@@ -1,5 +1,5 @@
 Tesmio Clock
-Package version: 1.1.3
+Package version: 1.1.4
 
 This file shows the version downloaded by Steam Workshop.
 The version actually installed in TesmioLoader is recorded in:

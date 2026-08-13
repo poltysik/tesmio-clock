@@ -1,4 +1,4 @@
-# Tesmio Clock 1.1.3
+# Tesmio Clock 1.1.4
 
 Tesmio Clock adds a readable digital clock to the top interface of
 **Workers & Resources: Soviet Republic**. It is an add-on for
@@ -13,7 +13,15 @@ independent timer.
 > and day/night synchronization logic belongs to Calendar Synchronizer; this
 > project adds the clock display and its calibrated integration.
 
-## What's new in 1.1.3
+## What's new in 1.1.4
+
+- Fixed vehicles moving many times faster than intended after installation.
+- The installer now enforces `vehicle_scale = 1` in Calendar Synchronizer,
+  preserving the base game's vehicle speed while the calendar day remains
+  synchronized and extended.
+- The correction is applied to both the 24-hour and AM/PM variants.
+
+## Previous 1.1.3 ultrawide update
 
 - Added adaptive placement for super-ultrawide and multi-monitor layouts.
 - Fixed clock placement at 32:9: the date field is now identified by its actual

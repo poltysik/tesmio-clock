@@ -141,6 +141,7 @@ $syncText = Get-Content -Raw -LiteralPath $synchronizerIni
 $syncText = Set-IniValue $syncText "enabled" "1"
 $syncText = Set-IniValue $syncText "cycle_days" "1"
 $syncText = Set-IniValue $syncText "day_scale" "auto"
+$syncText = Set-IniValue $syncText "vehicle_scale" "1"
 $syncText = Set-IniValue $syncText "offset" "0.5825"
 $syncText = Set-IniValue $syncText "fade" "1"
 $syncText = Set-IniValue $syncText "probe" "0"

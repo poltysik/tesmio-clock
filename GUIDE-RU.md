@@ -148,6 +148,9 @@ SovietRepublic\tesmioloader\build\plugins\TesmioClock.dll
 enabled = 1
 cycle_days = 1
 day_scale = auto
+slow = calendar
+vehicle_scale = 1
+sim_scale = 1
 offset = 0.5825
 fade = 1
 probe = 0
@@ -155,6 +158,18 @@ probe = 0
 
 ## Если мод не работает
 
+- **Транспорт двигается слишком быстро.** Причина находится в настройке
+  Calendar Synchronizer, а не в часах. Закройте игру и откройте файл:
+
+  ```text
+  Steam\steamapps\common\SovietRepublic\tesmioloader\build\plugins\daynight.ini
+  ```
+
+  Замените `vehicle_scale = 0.125` на `vehicle_scale = 1`, сохраните файл и
+  запустите игру через `tesmiolauncher.exe`. Установщик Tesmio Clock выполняет
+  эту настройку автоматически. Если после переустановки или обновления
+  Calendar Synchronizer проблема вернулась, повторно запустите
+  `INSTALL-TESMIO-CLOCK.bat`.
 - Убедитесь, что игра запущена через `tesmiolauncher.exe`.
 - Проверьте, что включены `TesmioClock.dll` и `daynight.dll`.
 - Не включайте одновременно `GameClock.dll` и `TesmioClock.dll`.

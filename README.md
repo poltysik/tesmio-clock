@@ -146,6 +146,9 @@ For the tested synchronization, Calendar Synchronizer must use:
 enabled = 1
 cycle_days = 1
 day_scale = auto
+slow = calendar
+vehicle_scale = 1
+sim_scale = 1
 offset = 0.5825
 fade = 1
 probe = 0
@@ -153,6 +156,17 @@ probe = 0
 
 ## Troubleshooting
 
+- **Vehicles move far too fast:** this is caused by Calendar Synchronizer's
+  vehicle-speed setting, not by the clock display. Close the game and open:
+
+  ```text
+  Steam\steamapps\common\SovietRepublic\tesmioloader\build\plugins\daynight.ini
+  ```
+
+  Replace `vehicle_scale = 0.125` with `vehicle_scale = 1`, save the file, and
+  start the game through `tesmiolauncher.exe`. The Tesmio Clock installer does
+  this automatically. If Calendar Synchronizer is reinstalled or updated
+  afterwards and the issue returns, run `INSTALL-TESMIO-CLOCK.bat` again.
 - Confirm the game is launched through `tesmiolauncher.exe`.
 - Confirm `TesmioClock.dll` and `daynight.dll` are enabled.
 - Do not enable both `GameClock.dll` and `TesmioClock.dll`.
